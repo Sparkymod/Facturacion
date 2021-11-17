@@ -1,0 +1,113 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@200;300;400;500;600;700&display=swap');
+
+.form-container * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.body-form {
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.form-container {
+    width: 100%;
+    max-width: 1000px;
+    background: #fff;
+    padding: 20px 30px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+}
+
+    .form-container .title {
+        font-size: 25px;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 10px;
+        position: relative;
+    }
+
+        .form-container .title::before {
+            content: '';
+            position: absolute;
+            width: 85px;
+            bottom: 0;
+            left: 40% auto;
+            height: 3px;
+            background: #e74c3c;
+            margin: 0 auto;
+        }
+
+    .form-container form .user-details {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin: 10px 0 12px 0;
+    }
+
+        .form-container form .user-details .input-box {
+            margin-bottom: 15px;
+            width: calc(100% / 2 -20px);
+        }
+
+            .form-container form .user-details .input-box .details {
+                font-size: 15px;
+                font-weight: 600;
+                margin-bottom: 5px;
+            }
+
+            .form-container form .user-details .input-box input {
+                height: 30px;
+                width: 100%;
+                border-radius: 5px;
+                padding-left: 15px;
+                border: 1px solid #ccc;
+                outline: none;
+                font-size: 14px;
+                border-bottom-width: 2px;
+                border-right-width: 2px;
+            }
+
+                .form-container form .user-details .input-box input:focus {
+                    border-color: #e74c3c;
+                }
+
+    .form-container form .button {
+        height: 40px;
+        margin: 45px 0;
+        display: flex;
+        justify-content: end;
+    }
+
+        .form-container form .button input {
+            width: 25%;
+            height: 100%;
+            border: none;
+            background: #e74c3c;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 5px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            box-shadow: 1px 1px 1px rgba(0,0,0,0.2);
+        }
+
+            .form-container form .button input:hover {
+                background: #d43b2a;
+            }
+
+@media screen and (max-width: 555px) {
+    .form-container form .button {
+        justify-content: center;
+    }
+
+    .form-container form .user-details .input-box {
+        width: 100%;
+    }
+}
