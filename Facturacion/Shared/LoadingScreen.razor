@@ -1,0 +1,23 @@
+﻿@if (IsLoaded)
+{
+    @ChildContent
+}
+else
+{
+    <div class="center_item">
+        <SpinKit Type="SpinKitType.Fold" Color="#314b97" Size="48px" />
+    </div>
+}
+
+@code {
+    private bool IsLoaded;
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    protected override Task OnInitializedAsync()
+    {
+        IsLoaded = true;
+        return Task.CompletedTask;
+    }
+}
