@@ -2,12 +2,13 @@
 
 namespace Facturacion.Data.Model
 {
-    public class TipoFactura
+    public class Lista_Precios
     {
         [Required]
-        public byte Rno { get; set; }
+        public byte IdListaPrecio { get; set; }
+
         [Required]
         [MaxLength(20)]
-        public string Tipo { get; set; } = "";
+        public string Descripcion { get; set; } = "";
     }
 }

@@ -21,7 +21,6 @@ if (!app.Environment.IsDevelopment())
 app.UseStaticFiles();
 
 app.UseRouting();
-
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();

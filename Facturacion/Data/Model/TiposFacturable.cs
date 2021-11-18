@@ -2,12 +2,12 @@
 
 namespace Facturacion.Data.Model
 {
-    public class TipoFactura
+    public class TiposFacturable
     {
         [Required]
-        public byte Rno { get; set; }
+        public byte Id { get; set; }
         [Required]
         [MaxLength(20)]
-        public string Tipo { get; set; } = "";
+        public string TipoFacturable { get; set; } = "";
     }
 }

@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Facturacion.Data.Model
 {
-    public class FacturaH
+    public class FacturasH
     {
         [Required]
         public int NoFact { get; set; }
@@ -11,13 +12,16 @@ namespace Facturacion.Data.Model
         [Required]
         public DateTime FechaFact { get; set; }
         [Required]
+        [ForeignKey("TiposFacturable")]
         public byte TipoFact { get; set; }
         [Required]
-        public int IdCliente { get; set; }
+        [ForeignKey("Clientes")]
+        public short IdCliente { get; set; }
         [Required]
+        [Column(TypeName = "money(19, 4)")]
         public decimal Monto { get; set; }
-        [Required]
-        public string SecFact { get; set; } = "";
+        [MaxLength(20)]
+        public string SecFiscal { get; set; } = "";
         [Required]
         public bool Pagada { get; set; }
     }
