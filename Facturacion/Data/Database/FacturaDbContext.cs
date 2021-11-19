@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Facturacion.Data.Models;
 
-namespace Facturacion.Data
+namespace Facturacion.Data.Database
 {
     public partial class FacturaDbContext : DbContext
     {
@@ -35,6 +34,7 @@ namespace Facturacion.Data
         public virtual DbSet<SecFiscal> SecFiscals { get; set; } = null!;
         public virtual DbSet<TiposCliente> TiposClientes { get; set; } = null!;
         public virtual DbSet<TiposFacturable> TiposFacturables { get; set; } = null!;
+        public virtual DbSet<TiposFiscal> TiposFiscals { get; set; } = null!;
         public virtual DbSet<View1> View1s { get; set; } = null!;
         public virtual DbSet<VwClientesActivo> VwClientesActivos { get; set; } = null!;
 
@@ -42,7 +42,7 @@ namespace Facturacion.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("");
+                optionsBuilder.UseSqlServer(Settings.GetConnectionString());
             }
         }
 

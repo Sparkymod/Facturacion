@@ -1,6 +1,10 @@
 ﻿@page "/"
+@using Facturacion.Data.Models
+@using Facturacion.Data.Service
 @using Microsoft.AspNetCore.Mvc
 
+@inject ClientService ClientService
+@inject TiposFiscalService TiposFiscalService
 
 <PageTitle>Facturacion</PageTitle>
 
@@ -14,25 +18,40 @@
                     <div class="input-box">
                         <span class="details"> Cliente </span>
                         <!--filled by db-->
-                        <input type="number" list="idCliente" />
+                        <input type="number" list="idCliente" @bind="@IdCliente" @onfocusout="() => GetClientName()" />
                         <datalist id="idCliente">
-                            <option value="01"></option>
+                            @if (listaCliente != null)
+                            {
+                                foreach (Cliente cliente in listaCliente)
+                                {
+                                    <option value="@cliente.IdCliente">@cliente.Nombre</option>
+                                }
+                            }
                         </datalist>
                     </div>
                     <div class="input-box">
                         <span class="details">Nombre del cliente</span>
                         <!--filled by the current client-->
-                        <input type="text" @bind="@Nombre" />
+                        @if (IdCliente == 0)
+                        {
+                            Nombre = "Consumidor Final";
+                            <input type="text" @bind="@Nombre" />
+                        }
+                        else
+                        {
+                            <input disabled type="text" @bind="@Nombre" />
+                        }
                     </div>
                     <div class="input-box">
                         <span class="details"> Tipo de Comprobante </span>
-                        <select @bind="@TipoFactura">
-                            <option value="1" selected>Credito Fiscal</option>
-                            <option value="2">Consumo</option>
-                            <option value="3">Nota de Debito</option>
-                            <option value="4">Nota de Credito</option>
-                            <option value="5">Régimen especiales</option>
-                            <option value="6">Gubernamental</option>
+                        <select @bind="@TipoFiscal">
+                            @if (listaTipoFactura != null)
+                            {
+                                foreach (TiposFiscal fiscal in listaTipoFactura)
+                                {
+                                    <option value="@fiscal.IdTipoFiscal">@fiscal.TipoFiscal</option>
+                                }
+                            }
                         </select>
                     </div>
                     <div class="input-box">
@@ -55,7 +74,7 @@
                             <option value="2">USD</option>
                         </select>
                     </div>
-                    @if (TipoFactura == 2)
+                    @if (TipoFiscal == 2)
                     {
                         <div class="input-box">
                             <span class="details"> Metodo de Pago </span>
@@ -65,7 +84,7 @@
                             </select>
                         </div>
                     }
-                    @if (TipoFactura == 1 || TipoFactura == 4 || TipoFactura == 5 || TipoFactura == 6)
+                    @if (TipoFiscal == 1 || TipoFiscal == 4 || TipoFiscal == 5 || TipoFiscal == 6)
                     {
                         <div class="input-box">
                             <span class="details"> Dias credito </span>
@@ -80,7 +99,30 @@
                 </div>
             </div>
             <div class="facturables">
-                
+                <table>
+                    <thead>
+                        <tr role="row" class="unselectable th-index-style">
+                            <th rowspan="1" colspan="1"> ID</th>
+                            <th rowspan="1" colspan="1"> Descripción</th>
+                            <th rowspan="1" colspan="1"> Precio</th>
+                            <th rowspan="1" colspan="1"> Cantidad</th>
+                            <th rowspan="1" colspan="1"> Monto</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>sdas</td>
+                            <td>TEST</td>
+                            <td>TEST</td>
+                            <td>TEST</td>
+                            <td>TEST</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="box-result">
+                    <span>Total:</span>
+                    <span class="precio">1,000</span>
+                </div>
             </div>
             <hr />
             <div class="button">
@@ -91,24 +133,41 @@
 </div>
 @code {
     [BindProperty]
-    public short IdCliente { get; set; }
+    public short? IdCliente { get; set; } = null!;
     [BindProperty]
     public string Nombre { get; set; } = "";
     [BindProperty]
-    public byte IdMoneda { get; set; }
+    public byte? IdMoneda { get; set; } = null!;
     [BindProperty]
     public DateTime FechaGenerada { get; set; } = DateTime.Now;
     [BindProperty]
-    public byte TipoFactura { get; set; }
+    public byte? TipoFiscal { get; set; } = null!;
     [BindProperty]
     public string SecFiscal { get; set; } = "";
     [BindProperty]
-    public byte IdDiasCredito { get; set; }
+    public byte? IdDiasCredito { get; set; } = null!;
 
+    public List<Cliente>? listaCliente { get; set; } = null!;
+    public List<TiposFiscal>? listaTipoFactura { get; set; } = null!;
     public FacturasD? FacturaD { get; set; } = new();
 
     public void HandleValidConfirm()
     {
-        Nombre = "Test";
+        // TODO: Facturar
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        listaCliente = await ClientService.GetAllClientAsync();
+        listaTipoFactura = await TiposFiscalService.GetAllTiposFiscalsAsync();
+    }
+
+    public Task GetClientName()
+    {
+        if (IdCliente > 0 && listaCliente != null && listaCliente.ElementAtOrDefault((int)IdCliente) != null)
+        {
+            Nombre = listaCliente[(int)IdCliente - 1].Nombre;
+        }
+        return Task.CompletedTask;
     }
 }

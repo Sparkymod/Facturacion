@@ -1,11 +1,27 @@
 using Blazorise;
+using Facturacion;
+using Serilog;
+using Facturacion.Data.Extensions;
+using Facturacion.Data.Service;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Extension
+builder.Services.AddAplicationDbContext();
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddBlazorise().AddEmptyProviders();
+builder.Services.AddScoped<ClientService>();
+builder.Services.AddScoped<TiposFiscalService>();
+
+builder.Host.UseSerilog(Settings.InitializeSerilog());
+
+if (!Settings.IsDevelopingMode())
+{
+    builder.WebHost.UseUrls(Settings.GetURL());
+}
 
 var app = builder.Build();
 
@@ -17,6 +33,7 @@ if (!app.Environment.IsDevelopment())
 
 
 app.UseStaticFiles();
+app.UseSerilogRequestLogging();
 
 app.UseRouting();
 app.UseEndpoints(endpoints =>
@@ -25,6 +42,5 @@ app.UseEndpoints(endpoints =>
     endpoints.MapBlazorHub();
     endpoints.MapFallbackToPage("/_Host");
 });
-
 
 app.Run();
