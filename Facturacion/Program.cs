@@ -1,4 +1,5 @@
 using Blazorise;
+using Blazorise.Bootstrap;
 using Facturacion;
 using Serilog;
 using Facturacion.Data.Extensions;
@@ -12,9 +13,14 @@ builder.Services.AddAplicationDbContext();
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddBlazorise().AddEmptyProviders();
+builder.Services.AddBlazorise().AddBootstrapProviders();
 builder.Services.AddScoped<ClientService>();
 builder.Services.AddScoped<TiposFiscalService>();
+builder.Services.AddScoped<MonedaService>();
+builder.Services.AddScoped<FacturableService>();
+builder.Services.AddScoped<DiasCreditoService>();
+builder.Services.AddScoped<FacturaHService>();
+builder.Services.AddScoped<FacturaDService>();
 
 builder.Host.UseSerilog(Settings.InitializeSerilog());
 
