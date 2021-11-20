@@ -2,14 +2,19 @@
 
 <PageTitle>Facturacion</PageTitle>
 
-<div class="page">
-    <main>
-        <div class="top-row px-4">
-            <a href="#" target="">Menu</a>
+<!-- navbar header menu -->
+<NavMenu SidebarToggle="SidebarToggle" />
+<section class="home-section">
+    <nav class="header">
+        <div class="sidebar-button">
+            <i class="bx bx-menu" @onclick="() => SidebarToggle = !SidebarToggle"></i>
         </div>
+    </nav>
+    <div class="home-body">
+        @Body
+    </div>
+</section>
 
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
-</div>
+@code {
+    public bool SidebarToggle { get; set; }
+}

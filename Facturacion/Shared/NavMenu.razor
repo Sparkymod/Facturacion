@@ -1,11 +1,27 @@
-﻿
+﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Authorization
+
+<div class="sidebar @SetActive(SidebarToggle)">
+    <div class="logo-details">
+        <i class="bx bxl-c-plus-plus"></i>
+        <span class="logo_name @SetActive(SidebarToggle)">Facturación</span>
+    </div>
+    <ul class="nav-links">
+        <li>
+            <a href="" class="@SetActive(DashboardToggle)" @onclick="DashboardToggleHandle">
+                <i class='bx bx-grid-alt'></i>
+                <span class="link_name">Inicio</span>
+            </a>
+        </li>
+    </ul>
+</div>
+
 @code {
-    private bool collapseNavMenu = true;
+    [Parameter]
+    public bool SidebarToggle { get; set; }
+    public bool DashboardToggle { get; set; }
 
-    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+    public string SetActive(bool toggle) => toggle ? "active" : "close";
 
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
+    public void DashboardToggleHandle() => DashboardToggle = DashboardToggle ? DashboardToggle : !DashboardToggle;
 }

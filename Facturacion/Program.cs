@@ -3,7 +3,8 @@ using Blazorise.Bootstrap;
 using Facturacion;
 using Serilog;
 using Facturacion.Data.Extensions;
-using Facturacion.Data.Service;
+using Facturacion.Data.Models;
+using Blazorise.Icons.FontAwesome;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +14,7 @@ builder.Services.AddAplicationDbContext();
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddBlazorise().AddBootstrapProviders();
+builder.Services.AddBlazorise().AddBootstrapProviders().AddFontAwesomeIcons();
 builder.Services.AddScoped<ClientService>();
 builder.Services.AddScoped<TiposFiscalService>();
 builder.Services.AddScoped<MonedaService>();
