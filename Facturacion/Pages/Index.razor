@@ -269,50 +269,50 @@ else
 
         try
         {
-            //if (listaProductos.Count == 0)
-            //{
-            //    return;
-            //}
-            //FacturasH facturaH = new()
-            //    {
-            //        NoFact = FacturaHNoFact + 1,
-            //        FechaGen = FechaGenerada,
-            //        Fecha = DateTime.Now,
-            //        IdCliente = (IdCliente == null ? (short)0 : (short)IdCliente),
-            //        Monto = PrecioFinal,
-            //        SecFiscal = SecFiscal,
-            //        Pagada = (IdTipoFiscal == 2 ? true : false),
-            //        IdTipoFiscal = IdTipoFiscal
+            if (listaProductos.Count == 0)
+            {
+                return;
+            }
+            FacturasH facturaH = new()
+                {
+                    NoFact = FacturaHNoFact + 1,
+                    FechaGen = FechaGenerada,
+                    Fecha = DateTime.Now,
+                    IdCliente = (IdCliente == null ? (short)0 : (short)IdCliente),
+                    Monto = PrecioFinal,
+                    SecFiscal = SecFiscal,
+                    Pagada = (IdTipoFiscal == 2 ? true : false),
+                    IdTipoFiscal = IdTipoFiscal
 
-            //    };
-            //// Save into db FacturaH
-            //await FacturaHService.Add(facturaH);
+                };
+            // Save into db FacturaH
+            await FacturaHService.Add(facturaH);
 
-            //FacturasD facturaD = new();
-            //foreach (ProductoFacturar producto in listaProductos)
-            //{
-            //    facturaD = new()
-            //        {
-            //            Rno = FacturaDRno,
-            //            NoFact = facturaH.NoFact,
-            //            IdFacturable = producto.Facturable.IdFacturable,
-            //            IdTipoFacturable = producto.Facturable.IdTipoFactuable,
-            //            NombreEsp = producto.Facturable.NombreEsp,
-            //            NombreEng = Encoding.ASCII.GetBytes(producto.Facturable.NombreIng),
-            //            PrecioRd = producto.Precio,
-            //            Cantidad = producto.Cantidad
-            //        };
+            FacturasD facturaD = new();
+            foreach (ProductoFacturar producto in listaProductos)
+            {
+                facturaD = new()
+                    {
+                        Rno = FacturaDRno,
+                        NoFact = facturaH.NoFact,
+                        IdFacturable = producto.Facturable.IdFacturable,
+                        IdTipoFacturable = producto.Facturable.IdTipoFactuable,
+                        NombreEsp = producto.Facturable.NombreEsp,
+                        NombreEng = Encoding.ASCII.GetBytes(producto.Facturable.NombreIng),
+                        PrecioRd = producto.Precio,
+                        Cantidad = producto.Cantidad
+                    };
 
-            //    // Save into db FacturaD
-            //    await FacturaDService.Add(facturaD);
-            //    facturasD.Add(facturaD);
-            //}
+                // Save into db FacturaD
+                await FacturaDService.Add(facturaD);
+                facturasD.Add(facturaD);
+            }
 
-            //FacturaFinal = new()
-            //{
-            //    FacturaH = facturaH,
-            //    FacturasD = facturasD
-            //};
+            FacturaFinal = new()
+            {
+                FacturaH = facturaH,
+                FacturasD = facturasD
+            };
 
             Facturando = true;
             IsSuccess = true;
