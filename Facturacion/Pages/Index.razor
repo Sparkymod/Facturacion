@@ -34,15 +34,24 @@ else
             <ModalBody>
                 <Field>
                     <FieldLabel>Id</FieldLabel>
-                    <TextEdit @bind-Text="@IdFacturable" @onfocusout="() => GetFacturableName()" />
+                    <input class="modal-input" @bind="@IdFacturable" />
                 </Field>
                 <Field>
                     <FieldLabel>Producto</FieldLabel>
-                    <TextEdit @bind-Text="@FacturableNombre" />
+                    @*<TextEdit @bind-Text="@FacturableNombre" />*@
+                    <select class="modal-input" @bind="@IdFacturable" @onfocusout="() => GetFacturableName()">
+                        @if (listaFacturable != null)
+                        {
+                            foreach (Facturable producto in listaFacturable)
+                            {
+                                <option value="@producto.IdFacturable">@producto.NombreEsp </option>
+                            }
+                        }
+                    </select>
                 </Field>
                 <Field>
                     <FieldLabel>Cantidad</FieldLabel>
-                    <TextEdit @bind-Text="@FacturableCantidad" />
+                    <input class="modal-input" @bind="@FacturableCantidad" />
                 </Field>
             </ModalBody>
             <ModalFooter>
@@ -61,8 +70,12 @@ else
                         <div class="input-box">
                             <span class="details"> Cliente </span>
                             <!--ID clientes-->
-                        <input type="number" list="idCliente" @bind="@IdCliente" @onfocusout="() => GetClientName()" />
-                            <datalist id="idCliente">
+                        <input type="number" list="idCliente" @bind="@IdCliente" />
+                        </div>
+                        <div class="input-box">
+                            <span class="details">Nombre del cliente</span>
+                            <!--Nombre cliente-->
+                        <select @bind="@IdCliente" @onfocusout="() => GetClientName()">
                                 @if (listaCliente != null)
                                 {
                                     foreach (Cliente cliente in listaCliente)
@@ -70,20 +83,7 @@ else
                                         <option value="@cliente.IdCliente">@cliente.Nombre</option>
                                     }
                                 }
-                            </datalist>
-                        </div>
-                        <div class="input-box">
-                            <span class="details">Nombre del cliente</span>
-                            <!--Nombre cliente-->
-                            @if (IdCliente == 0)
-                            {
-                                Nombre = "Consumidor Final";
-                                <input type="text" @bind="@Nombre" />
-                            }
-                            else
-                            {
-                                <input disabled type="text" @bind="@Nombre" />
-                            }
+                            </select>
                         </div>
                         <div class="input-box">
                             <span class="details"> Tipo de Comprobante </span>
@@ -156,7 +156,7 @@ else
                     </div>
                 </div>
                 <!-- Agregar Facturables-->
-                <div class="button">
+            <div class="button">
                     <button @onclick="() => ShowModal()">Agregar</button>
                 </div>
                 <div class="facturables">
@@ -309,10 +309,10 @@ else
             }
 
             FacturaFinal = new()
-            {
-                FacturaH = facturaH,
-                FacturasD = facturasD
-            };
+                {
+                    FacturaH = facturaH,
+                    FacturasD = facturasD
+                };
 
             Facturando = true;
             IsSuccess = true;
