@@ -9,14 +9,36 @@ namespace Facturacion.Data.Models
     {
         public async Task<List<Cliente>> GetAllAsync()
         {
-            using FacturaDbContext context = new();
-            return await context.Clientes.ToListAsync();
+            CancellationTokenSource source = new();
+            source.CancelAfter(5000);
+            var ct = source.Token;
+            try
+            {
+                using FacturaDbContext context = new();
+                return await context.Clientes.ToListAsync(ct);
+            }
+            catch (Exception ex)
+            {
+                return new();
+            }
+
         }
 
         public async Task<Cliente?> Get(short id)
         {
-            using FacturaDbContext context = new();
-            return await context.Clientes.FindAsync(id);
+            CancellationTokenSource source = new();
+            source.CancelAfter(5000);
+            var ct = source.Token;
+            try
+            {
+                using FacturaDbContext context = new();
+                return await context.Clientes.FindAsync(id,ct);
+            }
+            catch (Exception ex)
+            {
+                return new();
+            }
+
         }
     }
 }
